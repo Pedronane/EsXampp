@@ -1,0 +1,54 @@
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #d4af8c;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #5a4e42;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #2a2b2e;
+    color: #f5f1e8;
+    font-family: 'Georgia', serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #c9a961;
+    box-shadow: 0 0 8px rgba(201, 169, 97, 0.3);
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #8b7355;
+}
+
+.link-container {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #5a4e42;
+}
+
+.link-container a {
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    max-width: 200px;
+}
+
+.link-container button {
+    width: 100%;
+    margin: 0;
+}

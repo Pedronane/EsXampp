@@ -1,0 +1,107 @@
+/* Stile generale pagina */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    color: #333;
+    margin: 30px;
+}
+
+/* Form */
+form {
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    max-width: 650px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Label */
+form label {
+    flex: 0 0 130px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Select e input text */
+form select,
+form input[type="text"],
+form input[type="range"] {
+    flex: 1 1 200px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1.5px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+form select:focus,
+form input[type="text"]:focus,
+form input[type="range"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Output range value */
+form output {
+    width: 40px;
+    text-align: center;
+    font-weight: 600;
+    color: #4a90e2;
+}
+
+/* Pulsante */
+form button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #3a74c4;
+}
+
+/* Tabella */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 15px;
+}
+
+th {
+    background-color: #f0f4f8;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Righe dispari della tabella a righe alternate */
+tbody tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+/* Righe tabella al passaggio mouse */
+tbody tr:hover {
+    background-color: #dbe9ff;
+    transition: background-color 0.3s ease;
+}

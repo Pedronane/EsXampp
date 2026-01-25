@@ -1,0 +1,213 @@
+/* Reset di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Sfondo chiaro generale */
+body {
+    background-color: #f5f5f7;
+    color: #1f2933;
+    line-height: 1.5;
+}
+
+/* Layout principale */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* Header / titolo pagina */
+header,
+.page-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+header h1,
+.page-header h1 {
+    font-size: 2rem;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+header p,
+.page-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* Box contenuto principale */
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    margin-bottom: 24px;
+}
+
+/* Tabelle (per prodotti e carrello) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+thead {
+    background-color: #f3f4f6;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.95rem;
+}
+
+th {
+    font-weight: 600;
+    color: #374151;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Pulsanti */
+button,
+input[type="submit"],
+input[type="button"] {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Link */
+a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Messaggi informativi / vuoto carrello */
+.message {
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.message.info {
+    background-color: #e0f2fe;
+    color: #075985;
+}
+
+.message.success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.message.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Totale carrello */
+.cart-total {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Sezioni specifiche (opzionali) */
+.catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.catalog-header h2 {
+    font-size: 1.1rem;
+    color: #111827;
+}
+
+.cart-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+/* Form (se nelle pagine ci sono form per aggiungere al carrello) */
+form {
+    display: inline-block;
+}
+
+input[type="number"],
+select {
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    min-width: 60px;
+}
+
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* Piccolo adattamento mobile */
+@media (max-width: 640px) {
+    .container {
+        margin-top: 20px;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        font-size: 0.85rem;
+    }
+
+    .cart-actions {
+        justify-content: center;
+    }
+}
+

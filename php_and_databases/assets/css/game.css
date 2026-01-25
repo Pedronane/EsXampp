@@ -1,0 +1,155 @@
+.game-container {
+    max-width: 800px;
+    width: 90%;
+}
+
+.words-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+    .words-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .word-card:nth-child(4),
+    .word-card:nth-child(5) {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .words-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .word-card:nth-child(4),
+    .word-card:nth-child(5) {
+        grid-column: auto;
+    }
+}
+
+.word-card {
+    background: linear-gradient(135deg, #654321 0%, #8b7355 100%);
+    color: #f5f1e8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #a0826d;
+    font-family: 'Georgia', serif;
+}
+
+.guess-section {
+    background: #2a2b2e;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border: 1px solid #5a4e42;
+}
+
+.guess-form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.guess-form input[type="text"] {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid #5a4e42;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #3d3529;
+    color: #f5f1e8;
+    font-family: 'Georgia', serif;
+}
+
+.guess-form input[type="text"]:focus {
+    outline: none;
+    border-color: #c9a961;
+    box-shadow: 0 0 8px rgba(201, 169, 97, 0.3);
+}
+
+.guess-form input[type="text"]::placeholder {
+    color: #8b7355;
+}
+
+.guess-form button {
+    width: auto;
+    margin: 0;
+    min-width: 120px;
+}
+
+.guess-result {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #2a2b2e;
+    border-radius: 5px;
+    border: 1px solid #5a4e42;
+    color: #d4af8c;
+}
+
+.congratulations {
+    background: linear-gradient(135deg, #654321 0%, #8b7355 100%);
+    color: #f5f1e8;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2rem 0;
+    animation: pulse 2s infinite;
+    border: 2px solid #c9a961;
+    box-shadow: 0 0 20px rgba(201, 169, 97, 0.5);
+}
+
+.wrong-guess {
+    background: #4a2c2a;
+    color: #e8b4b4;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    margin: 1rem 0;
+    border: 1px solid #8b5a5a;
+    border-left: 4px solid #8b5a5a;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.info-message {
+    background: #2a3a2a;
+    color: #b4d4b4;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    border-left: 4px solid #5a7a5a;
+}
+
+.action-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #5a4e42;
+    flex-wrap: wrap;
+}
+
+.action-links a {
+    text-decoration: none;
+}
+
+.action-links button {
+    width: auto;
+    margin: 0;
+    min-width: 120px;
+}

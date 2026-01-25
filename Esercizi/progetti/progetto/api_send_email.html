@@ -1,0 +1,35 @@
+<?php
+function API_inviaEmail($get, $post, $session) {
+    $DB = new PDO('mysql:host=localhost;dbname=prontosoccorso', 'user', 'password'); 
+
+    $destinatario = isset($post['email']) ? $post['email'] : '';
+    $oggetto = "";
+    $messaggio = "";
+
+    if (!$destinatario) {
+        return ['errore' => 'Dati mancanti'];
+    }
+
+    $id_utente = isset($session['id_utente']) ? $session['id_utente'] : null;
+    $mittente = "no-reply@email.com"; 
+
+    if ($id_utente) {
+        $stmt = $DB->prepare("SELECT email FROM utenti WHERE id = ?");
+        $stmt->execute([$id_utente]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            $mittente = $row['email'];
+        }
+    }
+
+    $headers = "From: " . $mittente . "\r\n";  // Mittente 
+    $headers .= "Reply-To: " . $destinatario . "\r\n"; // Destinatario
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    if (mail($destinatario, $oggetto, $messaggio, $headers)) {
+        return ['successo' => 'Email inviata con successo'];
+    } else {
+        return ['errore' => 'Errore nell’invio dell’email'];
+    }
+}
+?>
