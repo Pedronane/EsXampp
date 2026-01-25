@@ -2,16 +2,24 @@
 
 function checkCredentials() {
     $result = "nonuser";
-    if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST)) {
-        if (isset($_POST['user']) && isset($_POST['passwd'])) {
+    $user = $_POST['user'] ?? null;
+    $passwd = $_POST['passwd'] ?? null;
+
+    if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        if ($user !== null && $passwd !== null) {
             $data = file(__DIR__ . "/../data/users.csv");
-            foreach ($data as $c) {
-                [$u, $p, $r] = explode(':', trim($c), 3);
-                if (strtolower($_POST['user']) == $u && $_POST['passwd'] == $p) {
-                    if (trim($r) == 'admin') {
-                        $result = "admin";
-                    } else {
-                        $result = "user";
+            if (is_array($data)) {
+                foreach ($data as $c) {
+                    $line = trim((string)$c);
+                    if ($line !== '') {
+                        [$u, $p, $r] = explode(':', $line, 3);
+                        if (strtolower((string)$user) == strtolower((string)$u) && (string)$passwd == (string)$p) {
+                            if (trim((string)$r) == 'admin') {
+                                $result = "admin";
+                            } else {
+                                $result = "user";
+                            }
+                        }
                     }
                 }
             }
@@ -22,30 +30,38 @@ function checkCredentials() {
 
 function registerUser() {
     $err = "";
-    if (trim($_POST['passwd']) == trim($_POST['confirm'])) {
-        $file = fopen(__DIR__ . "/../data/users.csv", "r+");
-        if ($file === false) {
-            return "Cannot open users.csv";
-        }
+    $user = $_POST['user'] ?? null;
+    $passwd = $_POST['passwd'] ?? null;
+    $confirm = $_POST['confirm'] ?? null;
 
-        while (!feof($file) && $err == "") {
-            $line = fgets($file);
-            if ($line) {
-                [$u, $p, $r] = explode(':', trim($line), 3);
-                if ((strtolower($u) == strtolower($_POST['user'])) && ($r == "user")) {
-                    $err = "Username already in use";
+    if ($user !== null && $passwd !== null && $confirm !== null) {
+        if (trim((string)$passwd) == trim((string)$confirm)) {
+            $file = fopen(__DIR__ . "/../data/users.csv", "r+");
+            if ($file === false) {
+                $err = "Cannot open users.csv";
+            } else {
+                while (!feof($file) && $err == "") {
+                    $line = fgets($file);
+                    if ($line) {
+                        [$u, $p, $r] = explode(':', trim((string)$line), 3);
+                        if ((strtolower((string)$u) == strtolower((string)$user)) && (trim((string)$r) == "user")) {
+                            $err = "Username already in use";
+                        }
+                    }
                 }
+
+                if ($err == "") {
+                    fseek($file, 0, SEEK_END);
+                    fwrite($file, "\n" . strtolower((string)$user) . ":" . (string)$passwd . ":user");
+                }
+
+                fclose($file);
             }
+        } else {
+            $err = "The passwords do not match";
         }
-
-        if ($err == "") {
-            fseek($file, 0, SEEK_END);
-            fwrite($file, "\n" . strtolower($_POST['user']) . ":" . $_POST['passwd'] . ":user");
-        }
-
-        fclose($file);
     } else {
-        $err = "The passwords do not match";
+        $err = "Missing registration data";
     }
     return $err;
 }

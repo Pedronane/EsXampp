@@ -1,12 +1,19 @@
 <?php
 session_start();
-if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == "admin") {
+$isLogged = isset($_SESSION['user']) && isset($_SESSION['role']);
+$role = $_SESSION['role'] ?? null;
+$shouldRender = !$isLogged;
+
+if ($isLogged) {
+    if ($role == "admin") {
         header("Location: admin.php");
     } else {
         header("Location: index.php");
     }
-} else {
+    $shouldRender = false;
+}
+
+$errorCookie = $_COOKIE['error'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +25,14 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
     <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Register</h1>
-        <?php if (isset($_COOKIE['error'])): ?>
-            <div class="error"><?= htmlspecialchars($_COOKIE['error']) ?></div>
-        <?php endif; ?>
+<?php
+if ($shouldRender) {
+    echo '<div class="container">';
+    echo '<h1>Register</h1>';
+    if (trim((string)$errorCookie) !== '') {
+        echo '<div class="error">' . htmlspecialchars($errorCookie) . '</div>';
+    }
+?>
         <form method="POST" action="includes/checkUser.php">
             <div class="form-group">
                 <label for="user">Username:</label>
@@ -38,15 +48,19 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
             </div>
             <button type="submit">Register</button>
         </form>
-        <div class="link-container">
-            <a href="login.php">Already have an account? Login</a>
-        </div>
-        <div class="link-container">
-            <a href="index.php"><button>Homepage</button></a>
-        </div>
-    </div>
-</body>
-</html>
 <?php
+    echo '<div class="link-container">';
+    echo '<a href="login.php">Already have an account? Login</a>';
+    echo '</div>';
+    echo '<div class="link-container">';
+    echo '<a href="index.php"><button>Homepage</button></a>';
+    echo '</div>';
+    echo '</div>';
+} else {
+    echo '<div class="container">';
+    echo '<p>Redirecting...</p>';
+    echo '</div>';
 }
 ?>
+</body>
+</html>

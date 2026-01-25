@@ -47,6 +47,15 @@ if ($_SESSION['role'] == "admin") {
           echo "<p>HAI INDOVINATO LA PAROLA</p>";
           echo "<a href='logout.php'><button>Logout</button></a>";
         }
+    		if (file_exists("history.csv") || 0 == filesize("history.csv")) {
+					$guesses = file("history.csv");
+        	$file = fopen("history.csv", "a");
+					$id = array_pop($guesses);
+					$id = explode(";",$id);
+					$str = $id[0].";";
+					foreach($parole as $parola)
+						$str .= $parola.";";
+				}
       } else {
         $parole = file("words.csv");
         $parole = explode(";", $parole[0]);

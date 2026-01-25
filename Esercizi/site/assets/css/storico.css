@@ -1,0 +1,82 @@
+/* storico.css */
+.history-container {
+  max-width: 1000px;
+}
+
+.info-message {
+  background: #2a3a2a;
+  color: #b4d4b4;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+  border-left: 4px solid #5a7a5a;
+}
+
+.action-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #5a4e42;
+  flex-wrap: wrap;
+}
+
+.action-links a {
+  text-decoration: none;
+}
+
+.action-links button {
+  width: auto;
+  margin: 0;
+  min-width: 120px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #5a4e42;
+  border-radius: 6px;
+  margin-top: 0.75rem;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(90, 78, 66, 0.8);
+  text-align: left;
+  vertical-align: top;
+}
+
+.history-table thead th {
+  color: #c9a961;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.col-ts {
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+.col-correct {
+  font-weight: 700;
+}
+
+.res-win {
+  color: #b4d4b4;
+  font-weight: 700;
+}
+
+.res-lose {
+  color: #e8b4b4;
+  font-weight: 700;
+}
