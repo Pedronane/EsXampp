@@ -30,16 +30,21 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['correct'])) {
           $str = '';
-          $str .= trim($_POST['p1'] ?? '');
+					$guesses = file("history.csv");
+					$id = array_pop($guesses);
+					$id = explode(";", $id);
+					if($id[0] == "a")
+						$str = "a" . ";" . $id[1]+1 . ";";
+					$str = "a" . ";" . $id[0]+1 . ";";
           $str .= ';' . trim($_POST['p2'] ?? '');
           $str .= ';' . trim($_POST['p3'] ?? '');
           $str .= ';' . trim($_POST['p4'] ?? '');
           $str .= ';' . trim($_POST['p5'] ?? '');
           $str .= ';' . trim($_POST['correct'] ?? '');
 
-          $file = fopen("words.csv", "w+");
+          $file = fopen("history.csv", "w+");
           if ($file) {
-            fwrite($file, $str);
+           	fwrite($file, $str);
             fclose($file);
             $file = fopen("guesses.csv", "w+");
           } else {

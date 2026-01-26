@@ -12,14 +12,22 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
     </head>
 
     <body>
-			
+			if (file_exists("history.csv") || 0 == filesize("history.csv")) {
+				$history = file("history.csv");
+				foreach($history as $line){
+					[$id, $p1, $p2, $p3, $p4, $p5, $cor, $guess, $res] = explode(";", $line);
+					if($id != "a"){
+						echo "<p> $p1, $p2, $p3, $p4, $p5 corretta: $cor indovinata: $guess</p>";
+					}
+				}
+			}
     </body>
 
     </html>
 
 <?php
   }
-} else {
-  header("Location: index.php");
+ 	else {
+  	header("Location: index.php");
 }
 ?>
