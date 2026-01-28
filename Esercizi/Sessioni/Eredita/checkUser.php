@@ -1,20 +1,15 @@
 <?php
 // Marchesi Pietro 5AI checkUser.php
+require_once "readFiles.php";
+
 function controllaDati()
 {
   $result = "nonuser";
   if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST)) {
     if (isset($_POST['user']) && isset($_POST['passwd'])) {
-      $data = file("users.csv");
-      foreach ($data as $c) {
-        [$u, $p, $r] = explode(':', trim($c), 3);
-        if (strtolower($_POST['user']) == $u && $_POST['passwd'] == $p) {
-          if (trim($r) == 'admin') {
-            $result = "admin";
-          } else {
-            $result = "user";
-          }
-        }
+      $role = checkCredentials($_POST['user'], $_POST['passwd']);
+      if ($role !== false) {
+        $result = $role;
       }
     }
   }
@@ -23,29 +18,17 @@ function controllaDati()
 
 // Si ipotizza che solo un user possa eseguire la registrazione
 // Un admin può inserire le proprie credenziali direttamente in file
-function registerUser()
+function registerUserLocal()
 {
   $err = "";
   if (trim($_POST['passwd']) == trim($_POST['confirm'])) {
-    $file = fopen("users.csv", "r+");
-    if ($file === false) {
-      return "Cannot open users.csv";
-    }
-
-    while (!feof($file) && $err == "") {
-      $line = fgets($file);
-      [$u, $p, $r] = explode(':', trim($line), 3);
-      if ((strtolower($u) == strtolower($_POST['user'])) && ($r == "user")) {
-        $err = "Username already in use";
+    if (usernameExists($_POST['user'])) {
+      $err = "Username already in use";
+    } else {
+      if (!registerUser($_POST['user'], $_POST['passwd'])) {
+        $err = "Cannot register user";
       }
     }
-
-    if ($err == "") {
-      fseek($file, 0, SEEK_END);
-      fwrite($file, strtolower($_POST['user']) . ":" . $_POST['passwd'] . ":user");
-    }
-
-    fclose($file);
   } else {
     $err = "The passwords do not match";
   }
@@ -69,7 +52,7 @@ if (!isset($_POST['confirm'])) {
     header("Location:login.php");
   }
 } else {
-  $err = registerUser();
+  $err = registerUserLocal();
   if ($err == "") {
     setcookie("error", "", time() - 3600);
     header("Location:login.php");

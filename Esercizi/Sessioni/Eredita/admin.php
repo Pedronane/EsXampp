@@ -1,6 +1,7 @@
 <?php
 // Marchesi Pietro 5AI admin.php
 session_start();
+require_once "readFiles.php";
 if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
   if ($_SESSION['role'] == "user") {
     header("Location: index.php");
@@ -28,27 +29,24 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
       </form>
       <?php
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['correct'])) {
-          $str = '';
-					$guesses = file("history.csv");
-					$id = array_pop($guesses);
-					$id = explode(";", $id);
-					if($id[0] == "a")
-						$str = "a" . ";" . $id[1]+1 . ";";
-					$str = "a" . ";" . $id[0]+1 . ";";
-          $str .= ';' . trim($_POST['p2'] ?? '');
-          $str .= ';' . trim($_POST['p3'] ?? '');
-          $str .= ';' . trim($_POST['p4'] ?? '');
-          $str .= ';' . trim($_POST['p5'] ?? '');
-          $str .= ';' . trim($_POST['correct'] ?? '');
-
-          $file = fopen("history.csv", "w+");
-          if ($file) {
-           	fwrite($file, $str);
-            fclose($file);
-            $file = fopen("guesses.csv", "w+");
+        if (isset($_POST['correct']) && isset($_POST['p1'])) {
+          $p1 = trim($_POST['p1'] ?? '');
+          $p2 = trim($_POST['p2'] ?? '');
+          $p3 = trim($_POST['p3'] ?? '');
+          $p4 = trim($_POST['p4'] ?? '');
+          $p5 = trim($_POST['p5'] ?? '');
+          $correct = trim($_POST['correct'] ?? '');
+          
+          // Salva le parole nel file words.csv
+          if (writeWords($p1, $p2, $p3, $p4, $p5, $correct)) {
+            // Inizializza la history per il nuovo round
+            if (initHistory($p1, $p2, $p3, $p4, $p5, $correct)) {
+              echo "<p>Parole pubblicate con successo!</p>";
+            } else {
+              echo "<p>Errore nell'inizializzazione della history.</p>";
+            }
           } else {
-            echo "Errore apertura file.";
+            echo "<p>Errore nella scrittura delle parole.</p>";
           }
         }
       }
