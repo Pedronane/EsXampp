@@ -96,9 +96,7 @@ function readWords()
     return $result;
 }
 
-/*
-    Scrive le parole nel file words.csv
-*/
+// Scrive le parole nel file words.csv
 function writeWords($p1, $p2, $p3, $p4, $p5, $correct)
 {
     $ok = false;
@@ -114,9 +112,7 @@ function writeWords($p1, $p2, $p3, $p4, $p5, $correct)
     return $ok;
 }
 
-/*
-    Ritorna la guess dell'utente nel round indicato (da history.csv)
-*/
+// Ritorna la guess dell'utente nel round indicato (da history.csv)
 function getUserGuessForRound($username, $round)
 {
     $guess = false;
@@ -134,9 +130,7 @@ function getUserGuessForRound($username, $round)
     return $guess;
 }
 
-/*
-    Verifica se un utente ha già risposto nel round indicato (da history.csv)
-*/
+// Verifica se un utente ha già risposto nel round indicato (da history.csv)
 function hasUserGuessedForRound($username, $round)
 {
     $hasGuessed = false;
@@ -149,9 +143,7 @@ function hasUserGuessedForRound($username, $round)
     return $hasGuessed;
 }
 
-/*
-    Legge la history dal file history.csv
-*/
+// Legge la history dal file history.csv
 function readHistory()
 {
     $history = [];
@@ -182,9 +174,7 @@ function readHistory()
     return $history;
 }
 
-/*
-    Aggiunge una nuova entry alla history
-*/
+// Aggiunge una nuova entry alla history
 function addHistoryEntry($id, $round, $p1, $p2, $p3, $p4, $p5, $correct, $guess, $result)
 {
     $ok = false;
@@ -223,9 +213,7 @@ function initHistory($p1, $p2, $p3, $p4, $p5, $correct)
     return $ok;
 }
 
-/*
-    Ottiene l'ID del round corrente dalla history
-*/
+// Ottiene l'ID del round corrente dalla history
 function getCurrentRoundId()
 {
     $history = readHistory();
@@ -243,9 +231,7 @@ function getCurrentRoundId()
     return $maxRound;
 }
 
-/**
-    Aggiunge una guess alla history del round corrente
-*/
+// Aggiunge una guess alla history del round corrente
 function addGuessToHistory($username, $guess, $correct)
 {
     $ok = false;
