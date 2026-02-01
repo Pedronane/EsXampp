@@ -19,55 +19,39 @@ if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
 		<a href="logout.php"><button>Logout</button></a>
 		<?php
 		$history = readHistory();
+		$userRounds = [];
 
-		if (empty($history)) {
+		foreach ($history as $entry) {
+			if (strtolower($entry['user']) == strtolower($_SESSION['user'])) {
+				$roundNum = $entry['round'];
+				if (!isset($userRounds[$roundNum])) {
+					$userRounds[$roundNum] = [];
+				}
+				$userRounds[$roundNum][] = $entry;
+			}
+		}
+
+		if (empty($userRounds)) {
 			echo "<p>Nessuna partita ancora registrata.</p>";
 		} else {
-			$rounds = [];
-			foreach ($history as $entry) {
-				if ($entry['id'] == 'a') {
-					$roundNum = $entry['round'];
-					if (!isset($rounds[$roundNum])) {
-						$rounds[$roundNum] = [
-							'admin' => $entry,
-							'guesses' => []
-						];
-					}
-				} else {
-					$roundNum = $entry['round'];
-					if (isset($rounds[$roundNum])) {
-						$rounds[$roundNum]['guesses'][] = $entry;
-					}
-				}
-			}
+			krsort($userRounds);
 
-			krsort($rounds);
+			foreach ($userRounds as $roundNum => $guesses) {
+				$roundData = getRoundById($roundNum);
 
-			foreach ($rounds as $roundNum => $roundData) {
-				$adminEntry = $roundData['admin'];
-				$guessed = false;
-				foreach ($roundData['guesses'] as $guess)
-					if (strtolower($_SESSION['user']) == strtolower($guess['id']))
-						$guessed = true;
-				if ($guessed) {
+				if ($roundData !== false) {
 					echo "<div style='border: 1px solid #ccc; padding: 15px; margin: 10px 0;'>";
 					echo "<h2>Round " . $roundNum . "</h2>";
-					echo "<p>Parole: " . htmlspecialchars($adminEntry['p1']) . ", " .
-						htmlspecialchars($adminEntry['p2']) . ", " .
-						htmlspecialchars($adminEntry['p3']) . ", " .
-						htmlspecialchars($adminEntry['p4']) . ", " .
-						htmlspecialchars($adminEntry['p5']) . "</p>";
-					echo "<p>Parola corretta: " . htmlspecialchars($adminEntry['correct']) . "</p>";
+					echo "<p>Parole: " . htmlspecialchars($roundData[1]) . ", " .
+						htmlspecialchars($roundData[2]) . ", " .
+						htmlspecialchars($roundData[3]) . ", " .
+						htmlspecialchars($roundData[4]) . ", " .
+						htmlspecialchars($roundData[5]) . "</p>";
+					echo "<p>Parola corretta: " . htmlspecialchars($roundData[6]) . "</p>";
 
-					if (!empty($roundData['guesses'])) {
-						foreach ($roundData['guesses'] as $guess) {
-							if (strtolower($_SESSION['user']) == strtolower($guess['id'])) {
-								$resultText = ($guess['result'] == '1') ? ' INDOVINATO</p>' : ' SBAGLIATO</p>';
-								echo "<p>Hai indovinato: " . htmlspecialchars($guess['guess']) . " - " . $resultText;
-							}
-						}
-					} else {
-						echo "<p>Nessuna risposta ancora registrata per questo round.</p>";
+					foreach ($guesses as $guess) {
+						$resultText = ($guess['result'] == '1') ? ' INDOVINATO</p>' : ' SBAGLIATO</p>';
+						echo "<p>Hai indovinato: " . htmlspecialchars($guess['guess']) . " - " . $resultText;
 					}
 					echo "</div>";
 				}

@@ -20,34 +20,35 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == "admin") {
 		<?php
 		$words = readWords();
 		if ($words !== false) {
-			$currentRound = getCurrentRoundId();
-			$userGuess = getUserGuessForRound($_SESSION['user'], $currentRound);
+			if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
+				$currentRound = getCurrentRoundId();
+				$userGuess = getUserGuessForRound($_SESSION['user'], $currentRound);
 
-			if ($userGuess !== false) {
-				echo "<p>Hai già risposto con la parola $userGuess</p>";
-				if (strtolower($userGuess) == strtolower($words['correct'])) {
-					echo "<p>HAI INDOVINATO LA PAROLA</p>";
-					echo "<a href='logout.php'><button>Logout</button></a>";
-				}
-			} elseif (isset($_POST['res'])) {
-				$guess = strtolower(trim($_POST['res']));
-				echo "<p>Hai già risposto con la parola $guess</p>";
+				if ($userGuess !== false) {
+					echo "<p>Hai già risposto con la parola $userGuess</p>";
+					if (strtolower($userGuess) == strtolower($words['correct'])) {
+						echo "<p>HAI INDOVINATO LA PAROLA</p>";
+						echo "<a href='logout.php'><button>Logout</button></a>";
+					}
+				} elseif (isset($_POST['res'])) {
+					$guess = strtolower(trim($_POST['res']));
+					echo "<p>Hai risposto con la parola $guess</p>";
 
-				$hasGuessed = (strtolower($guess) == strtolower($words['correct']));
-				if ($hasGuessed) {
-					echo "<p>HAI INDOVINATO LA PAROLA</p>";
-					echo "<a href='logout.php'><button>Logout</button></a>";
-				}
+					$hasGuessed = (strtolower($guess) == strtolower($words['correct']));
+					if ($hasGuessed) {
+						echo "<p>HAI INDOVINATO LA PAROLA</p>";
+						echo "<a href='logout.php'><button>Logout</button></a>";
+					} else {
+						echo "<p>Risposta sbagliata</p>";
+					}
 
-				addGuessToHistory($_SESSION['user'], $guess, $hasGuessed);
-			} else {
-				echo "<p>Parola: " . $words['p1'] . "</p>";
-				echo "<p>Parola: " . $words['p2'] . "</p>";
-				echo "<p>Parola: " . $words['p3'] . "</p>";
-				echo "<p>Parola: " . $words['p4'] . "</p>";
-				echo "<p>Parola: " . $words['p5'] . "</p>";
-
-				if (isset($_SESSION['user']) && isset($_SESSION['role'])) {
+					addGuessToHistory($_SESSION['user'], $guess, $hasGuessed);
+				} else {
+					echo "<p>Parola: " . $words['p1'] . "</p>";
+					echo "<p>Parola: " . $words['p2'] . "</p>";
+					echo "<p>Parola: " . $words['p3'] . "</p>";
+					echo "<p>Parola: " . $words['p4'] . "</p>";
+					echo "<p>Parola: " . $words['p5'] . "</p>";
 		?>
 					<form action="" method="POST">
 						<input type="text" name="res">
@@ -55,9 +56,9 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == "admin") {
 					</form>
 					<a href='logout.php'><button>Logout</button></a>
 		<?php
-				} else {
-					echo "<p>To guess you need to <a href='login.php'>login</a></p>";
 				}
+			} else {
+				echo "<p>To guess you need to <a href='login.php'>login</a></p>";
 			}
 		} else {
 			echo "<p>L'admin non ha ancora pubblicato, il gioco sara disponibile a breve</p>";
