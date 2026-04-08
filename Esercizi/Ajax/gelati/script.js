@@ -13,7 +13,7 @@ function mostraGelati(form) {
         const xhttp= new XMLHttpRequest();
         xhttp.open("POST","server.php");
         xhttp.onload=function(){
-            stampaGelati(this.responseText);
+            mostraGelatiPerNome(this.responseText);
         }
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhttp.send("nome="+nome+"&data="+data+"&prod="+prod);
@@ -40,4 +40,19 @@ function stampaGelati(risServer){
         }
     }
     document.getElementById("ris").innerHTML=risHtml;
+}
+
+function mostraGelatiPerNome(risServer, divRis){
+    let risGelati = JSON.parse(risServer);
+    if(risGelati == "ERR_CONN")
+        divRis.innerHTML = "Errore connessione";
+    else if(risGelati.length == 0)
+        divRis.innerHTML = "Nessun gelato trovato";
+    else{
+        let tblGelati = "<table border=1><thead><th>Nome</th><th>Data produzione</th><th>Data scadenza</th><th>Qty</th><th>Produttore</th></thead><tbody><tr>";
+        tblGelati += "<td>" + risGelati[0]['nome'] + "</td>";
+        tblGelati += "<td>" + risGelati[0][1] + "</td>";
+        tblGelati += "</tr></tbody></table>";
+        divRis.innerHTML = tblGelati;
+    }
 }

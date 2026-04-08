@@ -1,45 +1,37 @@
 <?php
-function cercaGelati($nome, $data, $prod) {
-    $righe = file("gelati.csv");
-    $risultati = [];
+function connDB(){
+    $host = "localhost";
+    $dbName = "gelateria";
+    $username = "root";
+    $password = "";
 
-    foreach ($righe as $gelato) {
-        $gelato = trim($gelato);
-        if ($gelato === "") continue;
+    $conn = null;
 
-        $campi = explode(";", $gelato, 5);
-        while (count($campi) < 5) $campi[] = "";
+    try {
+        $conn = new PDO("mysql:dbname=$dbName;host=$host",$username,$password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException) {
+        $conn = null; 
+    }
 
-        [$n, $dp, $ds, $q, $p] = $campi;
+    return $conn;
+}
 
-        $checkN = true;
-        $checkD = true;
-        $checkP = true;
+function eseguiQuery($query){
+    $ris = null;
+    $conn = connDB();
+    if ($conn != null) {
+        try {
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
 
-        if ($nome !== "") {
-            $checkN = (strpos($n, $nome) !== false);
-        }
-
-        if ($data !== "") {
-            $scadenza = strtotime(str_replace("/", "-", $data));
-            $input   = strtotime(str_replace("/", "-", $ds));
-
-            if ($scadenza !== false && $input !== false) {
-                $checkD = ($input <= $scadenza);
-            } else {
-                $checkD = (strpos($ds, $data) !== false);
-            }
-        }
-
-        if ($prod !== "") {
-            $checkP = (strpos($p, $prod) !== false);
-        }
-
-        if ($checkN && $checkD && $checkP) {
-            $risultati[] = [$n, $dp, $ds, $q, $p];
+            $ris = $stmt->fetchAll(PDO::FETCH_BOTH);
+        } catch (PDOException) {
+            $ris = null; 
         }
     }
 
-    return $risultati;
+    return $ris;
 }
+
 ?>
