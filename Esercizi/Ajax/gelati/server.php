@@ -1,7 +1,4 @@
 <?php
-/*
-* 
-*/
 include_once "funzioni.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -12,10 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $risultato = eseguiQuery($query);
     echo json_encode($risultato);
 } else {
-    $nome = $_GET["nome"] ?? "";
-    $query = "SELECT * FROM gelati WHERE nome LIKE '%$nome%';";
-    $risultato = eseguiQuery($query);
-    echo json_encode($risultato);
-    //echo json_encode("ERR_CONN");
+    echo json_encode("ERR_CONN");
 }
 ?>

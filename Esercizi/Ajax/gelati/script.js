@@ -13,7 +13,7 @@ function mostraGelati(form) {
         const xhttp= new XMLHttpRequest();
         xhttp.open("POST","server.php");
         xhttp.onload=function(){
-            mostraGelatiPerNome(this.responseText);
+            mostraGelatiPerNome(this.responseText, document.getElementById("ris"));
         }
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhttp.send("nome="+nome+"&data="+data+"&prod="+prod);
