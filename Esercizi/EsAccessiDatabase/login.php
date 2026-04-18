@@ -1,8 +1,7 @@
 <?php
-    // Marchesi Pietro 5AI login.php 04/03/2025
     session_start();
-    if (isset($_SESSION['user'])) {
-        header("Location: user.php");
+    if (isset($_SESSION['mail'])) {
+        header("Location: index.php");
     }
     else {
 ?>
@@ -11,20 +10,24 @@
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
-        <script srch="script.js"></script>
     </head>
     <body>
         <h1>Login</h1>
-        <div id="err"></div>
-        <form method="POST" action="checkUser.php" onsubmit="this">
+        <form method="POST" action="checkUser.php">
             <label for="user">Username: </label>
-            <input type="text" name="user" id="user" placeholder="Username">
+            <input type="text" name="mail" id="mail" placeholder="user.name@email.com">
             <br>
             <label for="passwd">Password: </label>
             <input type="password" id="passwd" name="passwd" placeholder="Password">
             <br>
             <input type="submit" value="Accedi">
         </form>
+        <?php 
+            if (isset($_COOKIE['error'])) {
+                $error = $_COOKIE['error'];
+                echo "<p>$error</p>";
+            }
+        ?>
         <br>
     </body>
 </html>

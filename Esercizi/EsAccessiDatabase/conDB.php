@@ -1,14 +1,14 @@
 <?php
 function getConnessione(){
     $host = "localhost";
-    $dbName = "bollette";
+    $dbName = "accessi";
     $username = "root";
     $password = "";
 
     $conn = null;
 
     try {
-        $conn = new PDO("mysql:dbname=$dbName:host=$host",$username,$password);
+        $conn = new PDO("mysql:dbname=$dbName;host=$host",$username,$password);
         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     } catch (PDOException) {
         $conn = null; 
