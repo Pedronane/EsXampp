@@ -27,8 +27,11 @@ if ($user != null) {
         $page = 'user';
     else
         $page = 'admin';
-    $query = "INSERT INTO accessi (idA, DataInizio, OraInizio, DataFine, OraFine, idU) VALUES (NULL, ". date("yyyy:MM:dd") . ",".time().", NULL, NULL, $idU);";
-    eseguiInsert($query);
+    $dataInizio = date("Y-m-d");
+    $oraInizio = date("H:i:s");
+    $query = "INSERT INTO accessi (idA, DataInizio, OraInizio, DataFine, OraFine, idU) VALUES (NULL, '$dataInizio', '$oraInizio', NULL, NULL, $userId);";
+    $idAccesso = eseguiInsert($query);
+    $_SESSION['idAccesso'] = $idAccesso;
     header("Location:$page.php");
 } else {
     setcookie("error", "E-mail or password wrong", time() + 3600);

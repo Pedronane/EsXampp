@@ -58,4 +58,25 @@ function eseguiInsert($q){
 
     return $result;
 }
+
+function eseguiUpdate($q){
+    $result = null;
+
+    $conn = getConnessione();
+
+    if ($conn != null) {
+        try {
+
+            $stmt = $conn->prepare($q);
+            $stmt->execute();
+
+            $result = $stmt->rowCount();
+
+        } catch (PDOException) {
+            $result = null; 
+        }
+    }
+
+    return $result;
+}
 ?>
