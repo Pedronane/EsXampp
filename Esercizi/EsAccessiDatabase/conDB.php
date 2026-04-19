@@ -17,15 +17,40 @@ function getConnessione(){
     return $conn;
 }
 
-function eseguiQuery($q){
+function eseguiSelect($q){
     $result = null;
+
     $conn = getConnessione();
+
     if ($conn != null) {
         try {
+
             $stmt = $conn->prepare($q);
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException) {
+            $result = null; 
+        }
+    }
+
+    return $result;
+}
+
+function eseguiInsert($q){
+    $result = null;
+
+    $conn = getConnessione();
+
+    if ($conn != null) {
+        try {
+
+            $stmt = $conn->prepare($q);
+            $stmt->execute();
+
+            $result = $conn->lastInsertId();
+
         } catch (PDOException) {
             $result = null; 
         }

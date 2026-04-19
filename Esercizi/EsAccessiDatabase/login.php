@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (isset($_SESSION['mail'])) {
+    if (isset($_SESSION['userId'])) {
         header("Location: index.php");
     }
     else {
@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Login</h1>
-        <form method="POST" action="checkUser.php">
+        <form method="POST" action="checkuser.php">
             <label for="user">Username: </label>
             <input type="text" name="mail" id="mail" placeholder="user.name@email.com">
             <br>
