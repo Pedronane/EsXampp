@@ -8,72 +8,65 @@ function getConnessione(){
     $conn = null;
 
     try {
-        $conn = new PDO("mysql:dbname=$dbName;host=$host",$username,$password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException) {
-        $conn = null; 
+        $conn = new PDO("mysql:dbname=$dbName;host=$host", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    } catch (PDOException $e) {
+        $conn = null;
     }
 
     return $conn;
 }
 
-function eseguiSelect($q){
+function eseguiSelect($q, $parametri = []){
     $result = null;
 
     $conn = getConnessione();
 
     if ($conn != null) {
         try {
-
             $stmt = $conn->prepare($q);
-            $stmt->execute();
-
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException) {
-            $result = null; 
+            $stmt->execute($parametri);
+            $result = $stmt->fetchAll();
+        } catch (PDOException $e) {
+            $result = null;
         }
     }
 
     return $result;
 }
 
-function eseguiInsert($q){
+function eseguiInsert($q, $parametri = []){
     $result = null;
 
     $conn = getConnessione();
 
     if ($conn != null) {
         try {
-
             $stmt = $conn->prepare($q);
-            $stmt->execute();
-
+            $stmt->execute($parametri);
             $result = $conn->lastInsertId();
-
-        } catch (PDOException) {
-            $result = null; 
+        } catch (PDOException $e) {
+            $result = null;
         }
     }
 
     return $result;
 }
 
-function eseguiUpdate($q){
+function eseguiUpdate($q, $parametri = []){
     $result = null;
 
     $conn = getConnessione();
 
     if ($conn != null) {
         try {
-
             $stmt = $conn->prepare($q);
-            $stmt->execute();
-
+            $stmt->execute($parametri);
             $result = $stmt->rowCount();
-
-        } catch (PDOException) {
-            $result = null; 
+        } catch (PDOException $e) {
+            $result = null;
         }
     }
 
