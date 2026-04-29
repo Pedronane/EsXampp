@@ -1,36 +1,27 @@
 <?php
-    session_start();
-    if (isset($_SESSION['userId'])) {
-        header("Location: index.php");
-    }
-    else {
+session_start();
+if(isset($_SESSION['userId']))
+    header("location: index.php");
+else{
 ?>
-<!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <title>Login</title>
-    </head>
-    <body>
-        <h1>Login</h1>
-        <form method="POST" action="checkuser.php">
-            <label for="user">Username: </label>
-            <input type="text" name="mail" id="mail" placeholder="user.name@email.com">
-            <br>
-            <label for="passwd">Password: </label>
-            <input type="password" id="passwd" name="passwd" placeholder="Password">
-            <br>
-            <input type="submit" value="Accedi">
-        </form>
-        <?php 
-            if (isset($_COOKIE['error'])) {
-                $error = $_COOKIE['error'];
-                echo "<p>$error</p>";
-            }
-        ?>
+<head>
+    <title>Login</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form name="frmLogin" onsubmit="cercaUser(this); return false;">
+        <input type="text" name="mail" placeholder="Email" required>
         <br>
-    </body>
+        <input type="password" name="passwd" placeholder="Password" required>
+        <br>
+        <input type="submit" value="Accedi">
+        <button type="button" onclick="location='registrazione.php'">Registrati</button>
+    </form>
+    <div id="msgErr"></div>
+</body>
 </html>
 <?php
-    }
+}
 ?>
