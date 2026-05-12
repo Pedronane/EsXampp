@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI admin_gestisci_utenti.php
 require_once "conDB.php";
 session_start();
 
@@ -69,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['idUtente'])) {
             echo "<td>" . $utente['email'] . "</td>";
             echo "<td>" . $utente['telefono'] . "</td>";
             echo "<td>";
-            echo "<form method='POST' action=''>";
+            echo "<a href='admin_modifica_utente.php?id=" . $utente['idU'] . "'>Modifica</a> ";
+            echo "<form method='POST' action='' style='display:inline'>";
             echo "<input type='hidden' name='idUtente' value='" . $utente['idU'] . "'>";
             echo "<input type='submit' value='Elimina'>";
             echo "</form>";

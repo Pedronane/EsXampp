@@ -1,3 +1,4 @@
+// Marchesi Pietro 5AI script.js
 function cercaUser(frmLogin){
     let mail = frmLogin.mail.value;
     let passwd = frmLogin.passwd.value;
@@ -56,6 +57,36 @@ function registraUser(frmReg){
     xhttp.send("nome=" + nome + "&cognome=" + cognome + "&email=" + mail +
                 "&dataNascita=" + dataNascita + "&sesso=" + sesso +
                 "&password=" + passwd + "&telefono=" + telefono + "&residenza=" + residenza);
+}
+
+function caricaAccessi(idUtente) {
+    const div = document.getElementById('tabellaAccessi');
+    if (idUtente == '') {
+        div.innerHTML = "<p>Seleziona un utente per vedere gli accessi</p>";
+        return;
+    }
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "accessi_utente_ajax.php");
+    xhttp.onload = function() {
+        stampaAccessi(this);
+    };
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("idUtente=" + idUtente);
+}
+
+function stampaAccessi(xhttp) {
+    let accessi = JSON.parse(xhttp.responseText);
+    const div = document.getElementById('tabellaAccessi');
+    if (accessi.length == 0) {
+        div.innerHTML = "<p>Nessun accesso trovato</p>";
+        return;
+    }
+    let html = "<table border='1'><tr><th>Data Inizio</th><th>Ora Inizio</th><th>Data Fine</th><th>Ora Fine</th></tr>";
+    for (let a of accessi) {
+        html += "<tr><td>" + a.DataInizio + "</td><td>" + a.OraInizio + "</td><td>" + (a.DataFine || '-') + "</td><td>" + (a.OraFine || '-') + "</td></tr>";
+    }
+    html += "</table>";
+    div.innerHTML = html;
 }
 
 function stampaRegistrazione(xhttp){

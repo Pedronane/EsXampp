@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI registrazione.php
 session_start();
 if(isset($_SESSION['userId']))
     header("location: index.php");

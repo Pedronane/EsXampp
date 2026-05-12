@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI conDB.php
 function getConnessione(){
     $host = "localhost";
     $dbName = "accessi";

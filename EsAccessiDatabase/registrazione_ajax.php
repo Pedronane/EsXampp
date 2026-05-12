@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI registrazione_ajax.php
 /*
     ERR_CONN = errore connessione db
     EMAIL_ESI = email già esistente

@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI admin_cancella_accessi.php
 require_once "conDB.php";
 session_start();
 

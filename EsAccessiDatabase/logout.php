@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI logout.php
 require_once "conDB.php";
 session_start();
 

@@ -1,4 +1,5 @@
 <?php
+// Marchesi Pietro 5AI checkuser_ajax.php
 /*
     ERR_CONN = errore connessione db
     NO_USR   = credenziali errate
